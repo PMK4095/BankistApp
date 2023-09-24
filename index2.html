@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sticky Navigation Example</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 2000px; /* A tall content to enable scrolling */
+      }
+
+      .navbar {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        position: fixed; /* Use "fixed" to make it sticky */
+        top: -100px; /* Initial position above the viewport */
+        left: 0;
+        right: 0;
+        transition: top 0.3s; /* Smooth transition when becoming sticky */
+        /* display: none; */
+      }
+
+      .content {
+        padding: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <h1>My Sticky Navigation</h1>
+    </div>
+
+    <div class="content">
+      <h2>Scroll down to see the effect</h2>
+      <!-- Content goes here -->
+    </div>
+
+    <script>
+      // Callback function
+      function handleIntersection(entries, observer) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Element is in the viewport, make the navigation sticky
+            document.querySelector('.navbar').style.top = '0';
+          } else {
+            // Element is out of the viewport, make the navigation non-sticky
+            document.querySelector('.navbar').style.top = '-10px';
+          }
+        });
+      }
+
+      // Options
+      const options = {
+        root: null, // The viewport is the root
+        rootMargin: '0px',
+        threshold: 0, // Trigger the callback as soon as any part of the target enters the viewport
+      };
+
+      // Create an Intersection Observer
+      const observer = new IntersectionObserver(handleIntersection, options);
+
+      // Observe the content area
+      const content = document.querySelector('.content');
+      observer.observe(content);
+    </script>
+  </body>
+</html>
